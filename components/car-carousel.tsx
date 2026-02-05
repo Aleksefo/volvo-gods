@@ -5,6 +5,7 @@ import Animated, {
   useAnimatedStyle,
   interpolate,
   Extrapolation,
+  FadeInDown,
   type SharedValue,
 } from 'react-native-reanimated';
 import { useCallback } from 'react';
@@ -45,22 +46,31 @@ function AnimatedCarCard({
     const scale = interpolate(
       scrollX.value,
       inputRange,
-      [0.92, 1, 0.92],
+      [0.88, 1, 0.88],
       Extrapolation.CLAMP,
     );
     const opacity = interpolate(
       scrollX.value,
       inputRange,
-      [0.6, 1, 0.6],
+      [0.5, 1, 0.5],
       Extrapolation.CLAMP,
     );
-    return { transform: [{ scale }], opacity };
+    const translateY = interpolate(
+      scrollX.value,
+      inputRange,
+      [10, 0, 10],
+      Extrapolation.CLAMP,
+    );
+    return { transform: [{ scale }, { translateY }], opacity };
   });
 
   return (
-    <View style={styles.cardWrapper}>
+    <Animated.View
+      style={styles.cardWrapper}
+      entering={FadeInDown.delay(index * 120).duration(500)}
+    >
       <CarCard car={car} animatedStyle={cardStyle} onPress={onPress} />
-    </View>
+    </Animated.View>
   );
 }
 
@@ -83,7 +93,7 @@ function PaginationDot({
     const width = interpolate(
       scrollX.value,
       inputRange,
-      [8, 24, 8],
+      [8, 28, 8],
       Extrapolation.CLAMP,
     );
     const opacity = interpolate(

@@ -1,6 +1,11 @@
-import { StyleSheet, Text, View, Pressable } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { Image } from 'expo-image';
-import Animated from 'react-native-reanimated';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withSpring,
+} from 'react-native-reanimated';
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import { type StyleProp, type ViewStyle } from 'react-native';
 
 import { type Car } from '@/constants/cars';
@@ -13,35 +18,56 @@ interface CarCardProps {
 }
 
 export function CarCard({ car, animatedStyle, onPress }: CarCardProps) {
+  const scale = useSharedValue(1);
+
+  const tapGesture = Gesture.Tap()
+    .onBegin(() => {
+      scale.value = withSpring(0.93, { damping: 14, stiffness: 180 });
+    })
+    .onFinalize(() => {
+      scale.value = withSpring(1, { damping: 14, stiffness: 160 });
+    })
+    .onEnd(() => {
+      if (onPress) {
+        onPress();
+      }
+    });
+
+  const pressStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value }],
+  }));
+
   return (
     <Animated.View style={[styles.card, animatedStyle]}>
-      <Pressable onPress={onPress} style={styles.pressable}>
-        <Text style={styles.bodyType}>{car.bodyType.toUpperCase()}</Text>
-        <View style={styles.nameRow}>
-          <Text style={styles.modelName}>{car.modelName}</Text>
-          <Text style={styles.modelType}>{car.modelType}</Text>
-        </View>
+      <GestureDetector gesture={tapGesture}>
+        <Animated.View style={[styles.pressable, pressStyle]}>
+          <Text style={styles.bodyType}>{car.bodyType.toUpperCase()}</Text>
+          <View style={styles.nameRow}>
+            <Text style={styles.modelName}>{car.modelName}</Text>
+            <Text style={styles.modelType}>{car.modelType}</Text>
+          </View>
 
-        <View style={styles.imageContainer}>
-          <Image
-            source={{ uri: car.imageUrl }}
-            style={styles.carImage}
-            contentFit="contain"
-            transition={300}
-          />
-        </View>
+          <View style={styles.imageContainer}>
+            <Image
+              source={{ uri: car.imageUrl }}
+              style={styles.carImage}
+              contentFit="contain"
+              transition={300}
+            />
+          </View>
 
-        <View style={styles.actions}>
-          <Pressable style={styles.actionButton} onPress={onPress}>
-            <Text style={styles.actionText}>LEARN</Text>
-            <Text style={styles.chevronPlaceholder}>{'>'}</Text>
-          </Pressable>
-          <Pressable style={styles.actionButton}>
-            <Text style={styles.actionText}>SHOP</Text>
-            <Text style={styles.chevronPlaceholder}>{'>'}</Text>
-          </Pressable>
-        </View>
-      </Pressable>
+          <View style={styles.actions}>
+            <View style={styles.actionButton}>
+              <Text style={styles.actionText}>LEARN</Text>
+              <Text style={styles.chevronPlaceholder}>{'>'}</Text>
+            </View>
+            <View style={styles.actionButton}>
+              <Text style={styles.actionText}>SHOP</Text>
+              <Text style={styles.chevronPlaceholder}>{'>'}</Text>
+            </View>
+          </View>
+        </Animated.View>
+      </GestureDetector>
     </Animated.View>
   );
 }
