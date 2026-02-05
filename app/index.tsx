@@ -1,14 +1,21 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
-import { useCallback } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import { VolvoColors } from '@/constants/theme';
-import { cars, type Car } from '@/constants/cars';
+import { cars, type BodyType, type Car } from '@/constants/cars';
 import { CarCarousel } from '@/components/car-carousel';
+import { FilterBar } from '@/components/filter-bar';
 
 export default function HomeScreen() {
   const router = useRouter();
+  const [activeFilter, setActiveFilter] = useState<BodyType | null>(null);
+
+  const filteredCars = useMemo(
+    () => (activeFilter ? cars.filter((c) => c.bodyType === activeFilter) : cars),
+    [activeFilter],
+  );
 
   const handlePressCard = useCallback(
     (car: Car) => {
@@ -23,7 +30,8 @@ export default function HomeScreen() {
         <Text style={styles.logo}>VOLVO</Text>
         <Text style={styles.subtitle}>Recharge Lineup</Text>
       </View>
-      <CarCarousel cars={cars} onPressCard={handlePressCard} />
+      <FilterBar activeFilter={activeFilter} onFilterChange={setActiveFilter} />
+      <CarCarousel cars={filteredCars} onPressCard={handlePressCard} />
     </SafeAreaView>
   );
 }
@@ -36,7 +44,7 @@ const styles = StyleSheet.create({
   header: {
     paddingHorizontal: 24,
     paddingTop: 16,
-    paddingBottom: 12,
+    paddingBottom: 4,
   },
   logo: {
     fontSize: 18,

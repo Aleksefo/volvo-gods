@@ -5,7 +5,9 @@ import Animated, {
   useAnimatedStyle,
   interpolate,
   Extrapolation,
-  FadeInDown,
+  FadeInRight,
+  FadeOutLeft,
+  LinearTransition,
   type SharedValue,
 } from 'react-native-reanimated';
 import { useCallback } from 'react';
@@ -67,7 +69,9 @@ function AnimatedCarCard({
   return (
     <Animated.View
       style={styles.cardWrapper}
-      entering={FadeInDown.delay(index * 120).duration(500)}
+      entering={FadeInRight.delay(index * 80).duration(400)}
+      exiting={FadeOutLeft.duration(300)}
+      layout={LinearTransition.springify().damping(18)}
     >
       <CarCard car={car} animatedStyle={cardStyle} onPress={onPress} />
     </Animated.View>
