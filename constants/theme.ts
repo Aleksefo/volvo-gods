@@ -1,41 +1,41 @@
-/**
- * Below are the colors that are used in the app. The colors are defined in the light and dark mode.
- * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
- */
-
 import { Platform } from 'react-native';
 
-const tintColorLight = '#0a7ea4';
-const tintColorDark = '#fff';
+export const VolvoColors = {
+  primaryBlue: '#003057',
+  accentBlue: '#1c6bba',
+  white: '#FFFFFF',
+  offWhite: '#FAFAFA',
+  lightGray: '#E8E8E8',
+  mediumGray: '#707070',
+  darkGray: '#333333',
+  textPrimary: '#1A1A1A',
+  textSecondary: '#707070',
+};
 
 export const Colors = {
   light: {
-    text: '#11181C',
-    background: '#fff',
-    tint: tintColorLight,
-    icon: '#687076',
-    tabIconDefault: '#687076',
-    tabIconSelected: tintColorLight,
+    text: VolvoColors.textPrimary,
+    background: VolvoColors.white,
+    tint: VolvoColors.accentBlue,
+    icon: VolvoColors.mediumGray,
+    tabIconDefault: VolvoColors.mediumGray,
+    tabIconSelected: VolvoColors.accentBlue,
   },
   dark: {
     text: '#ECEDEE',
     background: '#151718',
-    tint: tintColorDark,
+    tint: '#fff',
     icon: '#9BA1A6',
     tabIconDefault: '#9BA1A6',
-    tabIconSelected: tintColorDark,
+    tabIconSelected: '#fff',
   },
 };
 
 export const Fonts = Platform.select({
   ios: {
-    /** iOS `UIFontDescriptorSystemDesignDefault` */
     sans: 'system-ui',
-    /** iOS `UIFontDescriptorSystemDesignSerif` */
     serif: 'ui-serif',
-    /** iOS `UIFontDescriptorSystemDesignRounded` */
     rounded: 'ui-rounded',
-    /** iOS `UIFontDescriptorSystemDesignMonospaced` */
     mono: 'ui-monospace',
   },
   default: {
