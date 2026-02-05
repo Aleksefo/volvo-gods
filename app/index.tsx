@@ -1,15 +1,29 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useRouter } from 'expo-router';
+import { useCallback } from 'react';
 
 import { VolvoColors } from '@/constants/theme';
+import { cars, type Car } from '@/constants/cars';
+import { CarCarousel } from '@/components/car-carousel';
 
 export default function HomeScreen() {
+  const router = useRouter();
+
+  const handlePressCard = useCallback(
+    (car: Car) => {
+      router.push(`/car/${car.id}`);
+    },
+    [router],
+  );
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.logo}>VOLVO</Text>
         <Text style={styles.subtitle}>Recharge Lineup</Text>
       </View>
+      <CarCarousel cars={cars} onPressCard={handlePressCard} />
     </SafeAreaView>
   );
 }
