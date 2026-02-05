@@ -1,11 +1,10 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Pressable } from 'react-native';
 import { Image } from 'expo-image';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withSpring,
 } from 'react-native-reanimated';
-import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import { type StyleProp, type ViewStyle } from 'react-native';
 
 import { type Car } from '@/constants/cars';
@@ -20,18 +19,13 @@ interface CarCardProps {
 export function CarCard({ car, animatedStyle, onPress }: CarCardProps) {
   const scale = useSharedValue(1);
 
-  const tapGesture = Gesture.Tap()
-    .onBegin(() => {
-      scale.value = withSpring(0.93, { damping: 14, stiffness: 180 });
-    })
-    .onFinalize(() => {
-      scale.value = withSpring(1, { damping: 14, stiffness: 160 });
-    })
-    .onEnd(() => {
-      if (onPress) {
-        onPress();
-      }
-    });
+  const handlePressIn = () => {
+    scale.value = withSpring(0.93, { damping: 14, stiffness: 180 });
+  };
+
+  const handlePressOut = () => {
+    scale.value = withSpring(1, { damping: 14, stiffness: 160 });
+  };
 
   const pressStyle = useAnimatedStyle(() => ({
     transform: [{ scale: scale.value }],
@@ -39,7 +33,11 @@ export function CarCard({ car, animatedStyle, onPress }: CarCardProps) {
 
   return (
     <Animated.View style={[styles.card, animatedStyle]}>
-      <GestureDetector gesture={tapGesture}>
+      <Pressable
+        onPress={onPress}
+        onPressIn={handlePressIn}
+        onPressOut={handlePressOut}
+      >
         <Animated.View style={[styles.pressable, pressStyle]}>
           <Text style={styles.bodyType}>{car.bodyType.toUpperCase()}</Text>
           <View style={styles.nameRow}>
@@ -67,7 +65,7 @@ export function CarCard({ car, animatedStyle, onPress }: CarCardProps) {
             </View>
           </View>
         </Animated.View>
-      </GestureDetector>
+      </Pressable>
     </Animated.View>
   );
 }
