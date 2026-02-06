@@ -1,50 +1,30 @@
-# Welcome to your Expo app 👋
+# Volvo Recharge Lineup
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A React Native demo app showcasing Volvo's lineup. Built with Expo and React Native Reanimated to demonstrate smooth animations.
 
-## Get started
+## Running the app
 
-1. Install dependencies
+- Install dependencies: `npm install`
+- Start the dev server: `npx expo start`
 
-   ```bash
-   npm install
-   ```
+## What's implemented
 
-2. Start the app
+### Screens
+- Home screen with horizontal car carousel and car type filter
+- Car detail screen with collapsing header
 
-   ```bash
-   npx expo start
-   ```
+### Animations (React Native Reanimated)
+- Scroll-driven carousel with animation: cards scale and fade based on scroll position
+- Animated pagination dots that respond to scroll
+- Spring-based press feedback on cards
+- Staggered entrance animations
+- Filter options with animated background color transitions
+- Layout animations when filtering
+- Collapsing header on detail screen
+- Pull-to-expand effect on car detail hero image
 
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+### Tech stack
+- Expo SDK 54 with Expo Router
+- React Native Reanimated 4 for all animations
+- React Native Gesture Handler
+- TypeScript
