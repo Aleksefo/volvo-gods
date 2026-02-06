@@ -2,6 +2,9 @@
 
 A React Native demo app showcasing Volvo's lineup. Built with Expo and React Native Reanimated to demonstrate smooth animations.
 
+[Demo video featuring the animations
+](https://drive.google.com/file/d/1uFgft1lf2BREbXhq4SSWP0pm8ulygRhT/view?usp=sharing)
+
 ## Running the app
 
 - Install dependencies: `npm install`
