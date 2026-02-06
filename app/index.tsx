@@ -1,7 +1,8 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { useCallback, useMemo, useState } from 'react';
+import Animated, { FadeIn, FadeInDown } from 'react-native-reanimated';
 
 import { VolvoColors } from '@/constants/theme';
 import { cars, type BodyType, type Car } from '@/constants/cars';
@@ -26,11 +27,16 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
+      <Animated.View
+        entering={FadeIn.duration(600)}
+        style={styles.header}
+      >
         <Text style={styles.logo}>VOLVO</Text>
         <Text style={styles.subtitle}>Recharge Lineup</Text>
-      </View>
-      <FilterBar activeFilter={activeFilter} onFilterChange={setActiveFilter} />
+      </Animated.View>
+      <Animated.View entering={FadeInDown.delay(200).duration(500)}>
+        <FilterBar activeFilter={activeFilter} onFilterChange={setActiveFilter} />
+      </Animated.View>
       <CarCarousel cars={filteredCars} onPressCard={handlePressCard} />
     </SafeAreaView>
   );
